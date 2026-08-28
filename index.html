@@ -1,660 +1,149 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Оценка цифровых компетенций - Нечёткая логика</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Formulario</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, 'Segoe UI', 'Roboto', sans-serif;
-        }
-
+        /* ESTILOS OPCIONALES - Puedes mantener los tuyos o borrar esta sección */
         body {
-            background: #f0f4f8;
-            padding: 1.5rem;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f4f4f9;
         }
-
-        /* Контейнер основной: максимальная ширина 1200px */
-        .app-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+        form {
             background: white;
-            border-radius: 32px;
-            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
-
-        /* ШАПКА */
-        .header {
-            background: linear-gradient(135deg, #0b2b44 0%, #1b4a6e 100%);
-            color: white;
-            padding: 2rem 2rem;
-            text-align: center;
-        }
-        .header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        .header .sub {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-        .context {
-            font-size: 0.85rem;
-            background: rgba(255,255,255,0.12);
-            padding: 1rem;
-            border-radius: 28px;
-            margin-top: 0.75rem;
-            line-height: 1.5;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* КОНТЕНТ */
-        .content {
-            padding: 2rem 2rem;
-        }
-
-        /* Карточки выбора профиля */
-        .profile-selector {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            justify-content: center;
-        }
-        .profile-card {
-            flex: 1;
-            max-width: 280px;
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 1.2rem;
-            padding: 1.2rem 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .profile-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.4rem;
-        }
-        .profile-card p {
-            font-size: 0.75rem;
-            color: #334155;
-        }
-        .profile-card.selected {
-            background: #eff6ff;
-            border-color: #3b82f6;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 20px -12px rgba(59,130,246,0.3);
-        }
-        .profile-card[data-perfil="Administrativo"].selected {
-            border-color: #10b981;
-            background: #ecfdf5;
-        }
-
-        /* ИЗМЕРЕНИЯ (слайдеры) */
-        .dimension-item {
-            margin-bottom: 2rem;
-            background: #ffffff;
-            padding: 0.8rem 1rem;
-            border-radius: 20px;
-            border: 1px solid #eef2ff;
-            transition: box-shadow 0.2s;
-        }
-        .dimension-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            margin-bottom: 0.3rem;
-        }
-        .dimension-name {
-            font-weight: 700;
-            color: #0f172a;
-            font-size: 1rem;
-        }
-        .dimension-desc {
-            font-size: 0.75rem;
-            color: #475569;
-            margin-bottom: 0.6rem;
-            font-style: italic;
-        }
-        .dimension-value-wrapper {
-            display: flex;
-            gap: 0.8rem;
-            align-items: center;
-        }
-        .dimension-value {
-            font-weight: 700;
-            color: #2563eb;
-            background: #eef2ff;
-            padding: 0.2rem 0.7rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-        }
-        input[type="range"] {
-            width: 100%;
-            height: 6px;
+            padding: 30px;
             border-radius: 10px;
-            background: #e2e8f0;
-            -webkit-appearance: none;
-            margin: 0.5rem 0 0.2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        input[type="range"]:focus {
-            outline: none;
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
         }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #3b82f6;
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
         }
-        input[type="range"]:disabled {
-            background: #cbd5e1;
-            opacity: 0.7;
+        button:hover {
+            background: #45a049;
         }
-        input[type="range"]:disabled::-webkit-slider-thumb {
-            background: #94a3b8;
+        button:disabled {
+            background: #ccc;
             cursor: not-allowed;
         }
-        .number-input {
-            width: 70px;
-            padding: 0.3rem 0.5rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 14px;
-            text-align: center;
-            font-weight: 500;
-        }
-        /* Шкала под слайдером */
-        .slider-scale {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 0.25rem;
-            padding: 0 0.2rem;
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: #334155;
-        }
-        .slider-scale span {
-            width: 1.2rem;
-            text-align: center;
-        }
-
-        .scale-legend {
-            background: #f8fafc;
-            padding: 1rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin: 1.5rem 0 1rem;
-            gap: 0.5rem;
-        }
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            margin: 1.5rem 0 2rem;
-        }
-        .btn {
-            flex: 1;
-            padding: 0.85rem 1rem;
-            border: none;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .btn-primary {
-            background: #10b981;
-            color: white;
-        }
-        .btn-primary:hover {
-            background: #059669;
-            transform: translateY(-2px);
-        }
-        .btn-secondary {
-            background: #ef4444;
-            color: white;
-        }
-        .btn-secondary:hover {
-            background: #dc2626;
-        }
-        .results-container {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 1.2rem;
-            margin-top: 1rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            border: 1px solid #eef2ff;
-        }
-        .hidden-results {
+        .mensaje {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
             display: none;
         }
-        .show-results {
-            display: block;
-            animation: fadeSlide 0.3s ease-out;
+        .mensaje.exito {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
-        @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            border-left: 5px solid #3b82f6;
-            padding-left: 0.8rem;
-        }
-        .puntaje-card {
-            background: #f1f5f9;
-            border-radius: 20px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .puntaje-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-        }
-        .progress-bar-bg {
-            background: #e2e8f0;
-            border-radius: 20px;
-            height: 12px;
-            width: 100%;
-            margin: 0.5rem 0;
-        }
-        .progress-fill {
-            height: 100%;
-            border-radius: 20px;
-            transition: width 0.3s;
-        }
-        .nivel-badge {
-            display: inline-block;
-            padding: 0.3rem 1.2rem;
-            border-radius: 40px;
-            font-weight: bold;
-            margin-top: 0.5rem;
-        }
-        .membership-row {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 0.8rem;
-            flex-wrap: wrap;
-        }
-        .membership-label {
-            width: 100px;
-            font-weight: 600;
-        }
-        .membership-bar-container {
-            flex: 1;
-            background: #e2e8f0;
-            border-radius: 20px;
-            height: 28px;
-            overflow: hidden;
-        }
-        .membership-bar {
-            height: 100%;
-            width: 0%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 8px;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: bold;
-            transition: width 0.25s;
-        }
-        .membership-value {
-            min-width: 55px;
-            text-align: right;
-            font-family: monospace;
-        }
-        .reco-list {
-            list-style: none;
-            padding-left: 0;
-        }
-        .reco-list li {
-            padding: 0.6rem 0;
-            border-bottom: 1px solid #eef2ff;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        details {
-            margin-top: 1.5rem;
-            background: #f9f9ff;
-            border-radius: 20px;
-            padding: 0.8rem;
-        }
-        summary {
-            font-weight: 700;
-            cursor: pointer;
-            color: #1e40af;
-        }
-        .detalle-texto {
-            margin-top: 0.8rem;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            border-top: 1px solid #ddd;
-            padding-top: 0.8rem;
-        }
-        footer {
-            font-size: 0.7rem;
-            text-align: center;
-            padding: 1.2rem;
-            background: #f1f5f9;
-            color: #475569;
-        }
-        @media (max-width: 700px) {
-            .content { padding: 1.2rem; }
-            .profile-card h3 { font-size: 1.1rem; }
+        .mensaje.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
     </style>
 </head>
 <body>
-<div class="app-container">
-    <div class="header">
-        <h1>📊 Оценка цифровых компетенций</h1>
-        <div class="sub">На основе нечёткой логики (DigComp + модель Мамдани)</div>
-        <div class="context">
-            🔍 Демонстрационный инструмент, реализующий рамку DigCompEdu по 6 измерениям. 
-            Результаты получены с помощью треугольных функций принадлежности, правил вывода типа Мамдани и дефаззификации по центру тяжести.
-        </div>
-    </div>
 
-    <div class="content">
-        <!-- Выбор профиля -->
-        <div class="profile-selector" id="profileSelector">
-            <div class="profile-card selected" data-perfil="Docente" id="profileDocente">
-                <h3>👨‍🏫 Преподаватель</h3>
-                <p>Включает цифровую педагогику (D6)</p>
-            </div>
-            <div class="profile-card" data-perfil="Administrativo" id="profileAdmin">
-                <h3>💼 Административный</h3>
-                <p>Измерение D6 отключено</p>
-            </div>
-        </div>
+    <h1>📝 Formulario de contacto</h1>
+    <p>Completa los campos y envía tu información. Los datos se guardarán automáticamente en Google Sheets.</p>
 
-        <!-- Контейнер слайдеров -->
-        <div id="slidersContainer"></div>
+    <!-- ⚠️ EL FORMULARIO - id="miFormulario" es OBLIGATORIO -->
+    <form id="miFormulario">
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" id="nombre" name="Nombre" placeholder="Escribe tu nombre completo" required>
 
-        <!-- Легенда шкалы -->
-        <div class="scale-legend">
-            <span>1️⃣ Не знаю / Не использую</span>
-            <span>2️⃣ Знаю, но не использую</span>
-            <span>3️⃣ Использую с трудом / Нужна помощь</span>
-            <span>4️⃣ Использую самостоятельно</span>
-            <span>5️⃣ Владею и могу учить других</span>
-        </div>
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="Email" placeholder="ejemplo@correo.com" required>
 
-        <div class="button-group">
-            <button class="btn btn-primary" id="evaluateBtn">🔍 Оценить компетенции</button>
-            <button class="btn btn-secondary" id="resetBtn">🔄 Сбросить</button>
-        </div>
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="Mensaje" placeholder="Escribe tu mensaje aquí" rows="4" required></textarea>
 
-        <div id="resultsArea" class="results-container hidden-results"></div>
-    </div>
-    <footer>© Система валидирована на основе нечёткой логики | Исследование цифровых компетенций</footer>
-</div>
+        <button type="submit">📤 Enviar datos</button>
+    </form>
 
-<script>
-    // ---------- ФУНКЦИИ ПРИНАДЛЕЖНОСТИ ----------
-    function membresiaBasico(x) {
-        if (x <= 1.5) return 1.0;
-        if (x >= 2.5) return 0.0;
-        return (2.5 - x) / 1.0;
-    }
-    function membresiaIntermedio(x) {
-        if (x <= 1.5 || x >= 3.5) return 0.0;
-        if (x <= 3.0) return (x - 1.5) / 1.0;
-        return (3.5 - x) / 1.0;
-    }
-    function membresiaAvanzado(x) {
-        if (x <= 2.5 || x >= 4.5) return 0.0;
-        if (x <= 4.0) return (x - 2.5) / 1.0;
-        return (4.5 - x) / 1.0;
-    }
-    function membresiaExperto(x) {
-        if (x <= 3.5) return 0.0;
-        if (x >= 5.0) return 1.0;
-        if (x < 4.75) return (x - 3.5) / 1.0;
-        return 1.0;
-    }
+    <!-- Contenedor para mensajes de éxito/error -->
+    <div id="mensaje" class="mensaje"></div>
 
-    // ПРАВИЛА МАМДАНИ
-    function aplicarReglasDifusas(d1, d2, d3, d4) {
-        const muB1 = membresiaBasico(d1), muA1 = membresiaAvanzado(d1), muE1 = membresiaExperto(d1);
-        const muB2 = membresiaBasico(d2), muA2 = membresiaAvanzado(d2), muE2 = membresiaExperto(d2);
-        const muB3 = membresiaBasico(d3);
-        const muB4 = membresiaBasico(d4);
+    <!-- ⚠️ EL SCRIPT - CAMBIA 'TU_SCRIPT_ID' por tu URL real -->
+    <script>
+        // 🔴 ¡IMPORTANTE! Reemplaza 'TU_SCRIPT_ID' con la URL que obtuviste de Google Apps Script
+        // Debe verse como: 'https://script.google.com/macros/s/ABC123xyz/exec'
+        const scriptURL = 'https://script.google.com/macros/s/TU_SCRIPT_ID/exec';
         
-        // R4: ЕСЛИ Информация = Базовый И Коммуникация = Базовый ТО Уровень = Базовый
-        let activacionBasico = Math.min(muB1, muB2);
-        // R2: ЕСЛИ Создание контента = Базовый ИЛИ Безопасность = Базовый ТО Уровень = Средний
-        let activacionIntermedio = Math.max(muB3, muB4);
-        // R1: ЕСЛИ Информация = Продвинутый И Коммуникация = Продвинутый ТО Уровень = Продвинутый
-        let activacionAvanzado = Math.min(muA1, muA2);
-        // R3: ЕСЛИ Информация = Экспертный И Коммуникация = Экспертный ТО Уровень = Экспертный
-        let activacionExperto = Math.min(muE1, muE2);
-        
-        return { basico: activacionBasico, intermedio: activacionIntermedio, avanzado: activacionAvanzado, experto: activacionExperto };
-    }
+        const form = document.getElementById('miFormulario');
+        const mensajeDiv = document.getElementById('mensaje');
 
-    // ДЕФАЗЗИФИКАЦИЯ (центр тяжести)
-    function defuzzificar(activacion) {
-        const puntos = { basico: 1.5, intermedio: 3.0, avanzado: 4.0, experto: 4.75 };
-        let numerador = 0, denominador = 0;
-        for (let [nivel, mu] of Object.entries(activacion)) {
-            numerador += puntos[nivel] * mu;
-            denominador += mu;
-        }
-        return denominador === 0 ? 2.5 : numerador / denominador;
-    }
+        form.addEventListener('submit', e => {
+            e.preventDefault(); // Evita que la página se recargue
+            
+            // Deshabilita el botón mientras se envía
+            const btn = form.querySelector('button[type="submit"]');
+            const textoOriginal = btn.textContent;
+            btn.textContent = '⏳ Enviando...';
+            btn.disabled = true;
+            
+            // Oculta mensajes anteriores
+            mensajeDiv.style.display = 'none';
+            mensajeDiv.className = 'mensaje';
 
-    // Определение уровня по баллу
-    function nivelPorPuntaje(score) {
-        if (score < 2.5) return { nombre: "Базовый", color: "#dc2626", bgLight: "#fee2e2" };
-        if (score < 3.5) return { nombre: "Средний", color: "#f97316", bgLight: "#ffedd5" };
-        if (score < 4.5) return { nombre: "Продвинутый", color: "#3b82f6", bgLight: "#dbeafe" };
-        return { nombre: "Экспертный", color: "#10b981", bgLight: "#d1fae5" };
-    }
-
-    // Генерация рекомендаций на русском
-    function generarRecomendaciones(d3, d4, d5, d6, perfil, nivelNombre) {
-        let recs = [];
-        if (d4 < 3.0) recs.push("🔒 Обучение цифровой безопасности (защита данных, управление цифровой идентичностью).");
-        if (d3 < 3.0) recs.push("🎨 Мастерская по созданию цифрового контента (мультимедиа, дизайн).");
-        if (d5 < 3.0) recs.push("🛠️ Курс по решению технических проблем и вычислительному мышлению.");
-        if (perfil === "Docente" && d6 < 3.0) recs.push("👩‍🏫 Цифровая педагогика: интеграция ИКТ в процессы обучения.");
-        if (recs.length === 0) recs.push("✨ Поддержание и постоянное обновление цифровых компетенций.");
-        if (nivelNombre === "Продвинутый" || nivelNombre === "Экспертный") recs.push("🏆 Может выступать наставником для коллег с более низкими уровнями.");
-        return recs;
-    }
-
-    // --- Данные измерений (значения по умолчанию 1.0, с русскими описаниями) ---
-    const dimensiones = [
-        { id: "d1", nombre: "D1. Информационная и цифровая грамотность", desc: "Способность искать, оценивать и управлять цифровой информацией", default: 1.0 },
-        { id: "d2", nombre: "D2. Общение и сотрудничество", desc: "Умение общаться и сотрудничать в цифровой среде", default: 1.0 },
-        { id: "d3", nombre: "D3. Создание цифрового контента", desc: "Способность создавать и редактировать цифровой контент", default: 1.0 },
-        { id: "d4", nombre: "D4. Цифровая безопасность", desc: "Защита данных, управление цифровой идентичностью и благополучие", default: 1.0 },
-        { id: "d5", nombre: "D5. Устранение неполадок", desc: "Способность решать технические проблемы и творчески использовать технологии", default: 1.0 },
-        { id: "d6", nombre: "D6. Цифровая педагогика", desc: "Способность интегрировать технологии в процессы обучения (только для преподавателя)", default: 1.0 }
-    ];
-
-    let currentProfile = "Docente";
-    let slidersValues = { d1: 1.0, d2: 1.0, d3: 1.0, d4: 1.0, d5: 1.0, d6: 1.0 };
-
-    function renderSliders() {
-        const container = document.getElementById("slidersContainer");
-        if (!container) return;
-        let html = "";
-        dimensiones.forEach(dim => {
-            const isD6 = dim.id === "d6";
-            const disabledAttr = (currentProfile === "Administrativo" && isD6) ? "disabled" : "";
-            const disabledNumber = (currentProfile === "Administrativo" && isD6) ? "disabled" : "";
-            const val = slidersValues[dim.id];
-            html += `
-                <div class="dimension-item" data-dim="${dim.id}">
-                    <div class="dimension-header">
-                        <span class="dimension-name">${dim.nombre}</span>
-                        <div class="dimension-value-wrapper">
-                            <span class="dimension-value" id="${dim.id}_display">${val.toFixed(1)}</span>
-                            <input type="number" id="${dim.id}_number" class="number-input" step="0.1" min="1" max="5" value="${val.toFixed(1)}" ${disabledNumber}>
-                        </div>
-                    </div>
-                    <div class="dimension-desc">${dim.desc}</div>
-                    <input type="range" id="${dim.id}_slider" min="1" max="5" step="0.1" value="${val.toFixed(1)}" ${disabledAttr}>
-                    <div class="slider-scale">
-                        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-                    </div>
-                </div>
-            `;
+            // Envía los datos a Google Sheets
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: new FormData(form)
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Éxito: limpia el formulario y muestra mensaje
+                    form.reset();
+                    mensajeDiv.textContent = '✅ ¡Datos guardados correctamente en Google Sheets!';
+                    mensajeDiv.className = 'mensaje exito';
+                    mensajeDiv.style.display = 'block';
+                } else {
+                    // Error del servidor
+                    mensajeDiv.textContent = '❌ Error al guardar los datos. Intenta de nuevo.';
+                    mensajeDiv.className = 'mensaje error';
+                    mensajeDiv.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                // Error de conexión
+                console.error('Error:', error);
+                mensajeDiv.textContent = '❌ Error de conexión. Revisa tu internet e intenta de nuevo.';
+                mensajeDiv.className = 'mensaje error';
+                mensajeDiv.style.display = 'block';
+            })
+            .finally(() => {
+                // Restaura el botón
+                btn.textContent = textoOriginal;
+                btn.disabled = false;
+            });
         });
-        container.innerHTML = html;
-        
-        // Привязываем события
-        dimensiones.forEach(dim => {
-            const slider = document.getElementById(`${dim.id}_slider`);
-            const number = document.getElementById(`${dim.id}_number`);
-            const display = document.getElementById(`${dim.id}_display`);
-            if (!slider) return;
-            const updateFromSlider = () => {
-                let v = parseFloat(slider.value);
-                if (isNaN(v)) v = 1.0;
-                slidersValues[dim.id] = v;
-                if (number) number.value = v.toFixed(1);
-                if (display) display.innerText = v.toFixed(1);
-            };
-            const updateFromNumber = () => {
-                let v = parseFloat(number.value);
-                if (isNaN(v)) v = slidersValues[dim.id];
-                v = Math.min(5, Math.max(1, v));
-                slider.value = v;
-                slidersValues[dim.id] = v;
-                if (display) display.innerText = v.toFixed(1);
-                number.value = v.toFixed(1);
-            };
-            slider.addEventListener("input", updateFromSlider);
-            if (number) number.addEventListener("input", updateFromNumber);
-        });
-        toggleD6State();
-    }
+    </script>
 
-    function toggleD6State() {
-        const isAdmin = (currentProfile === "Administrativo");
-        const d6Slider = document.getElementById("d6_slider");
-        const d6Number = document.getElementById("d6_number");
-        if (d6Slider) {
-            d6Slider.disabled = isAdmin;
-            d6Slider.style.opacity = isAdmin ? "0.6" : "1";
-        }
-        if (d6Number) d6Number.disabled = isAdmin;
-    }
-
-    function resetAll() {
-        slidersValues = { d1: 1.0, d2: 1.0, d3: 1.0, d4: 1.0, d5: 1.0, d6: 1.0 };
-        currentProfile = "Docente";
-        document.getElementById("profileDocente").classList.add("selected");
-        document.getElementById("profileAdmin").classList.remove("selected");
-        renderSliders();
-        const resultsDiv = document.getElementById("resultsArea");
-        resultsDiv.classList.add("hidden-results");
-        resultsDiv.classList.remove("show-results");
-        resultsDiv.innerHTML = "";
-        toggleD6State();
-    }
-
-    function evaluar() {
-        let d1 = slidersValues.d1, d2 = slidersValues.d2, d3 = slidersValues.d3;
-        let d4 = slidersValues.d4, d5 = slidersValues.d5, d6 = slidersValues.d6;
-        const perfilEfectivo = currentProfile;
-        let d6_effective = (perfilEfectivo === "Docente") ? d6 : 0;
-        
-        const activacion = aplicarReglasDifusas(d1, d2, d3, d4);
-        const puntajeGlobal = defuzzificar(activacion);
-        const nivelObj = nivelPorPuntaje(puntajeGlobal);
-        
-        const mu_B = activacion.basico, mu_I = activacion.intermedio, mu_A = activacion.avanzado, mu_E = activacion.experto;
-        
-        const recomendaciones = generarRecomendaciones(d3, d4, d5, d6_effective, perfilEfectivo, nivelObj.nombre);
-        
-        const resultsDiv = document.getElementById("resultsArea");
-        resultsDiv.innerHTML = `
-            <div class="section-title">📊 РЕЗУЛЬТАТЫ</div>
-            <div class="puntaje-card">
-                <div class="puntaje-number">${puntajeGlobal.toFixed(2)} / 5.00</div>
-                <div class="progress-bar-bg"><div class="progress-fill" style="width: ${(puntajeGlobal/5)*100}%; background: ${nivelObj.color};"></div></div>
-                <div><span class="nivel-badge" style="background: ${nivelObj.bgLight}; color: ${nivelObj.color};">🎯 УРОВЕНЬ: ${nivelObj.nombre}</span></div>
-            </div>
-            <div style="margin-top: 1rem;">
-                <div style="font-weight: 700; margin-bottom: 0.5rem;">📈 Степени принадлежности (агрегация)</div>
-                <div class="membership-row"><span class="membership-label">Базовый</span><div class="membership-bar-container"><div class="membership-bar" style="width: ${mu_B*100}%; background: #dc2626;">${(mu_B*100).toFixed(0)}%</div></div><span class="membership-value">${mu_B.toFixed(3)}</span></div>
-                <div class="membership-row"><span class="membership-label">Средний</span><div class="membership-bar-container"><div class="membership-bar" style="width: ${mu_I*100}%; background: #f97316;">${(mu_I*100).toFixed(0)}%</div></div><span class="membership-value">${mu_I.toFixed(3)}</span></div>
-                <div class="membership-row"><span class="membership-label">Продвинутый</span><div class="membership-bar-container"><div class="membership-bar" style="width: ${mu_A*100}%; background: #3b82f6;">${(mu_A*100).toFixed(0)}%</div></div><span class="membership-value">${mu_A.toFixed(3)}</span></div>
-                <div class="membership-row"><span class="membership-label">Экспертный</span><div class="membership-bar-container"><div class="membership-bar" style="width: ${mu_E*100}%; background: #10b981;">${(mu_E*100).toFixed(0)}%</div></div><span class="membership-value">${mu_E.toFixed(3)}</span></div>
-            </div>
-            <div style="margin-top: 1.5rem;">
-                <div class="section-title" style="font-size:1.1rem;">📚 РЕКОМЕНДАЦИИ ПО ОБУЧЕНИЮ</div>
-                <ul class="reco-list">${recomendaciones.map(r => `<li>🔹 ${r}</li>`).join('')}</ul>
-            </div>
-            <details>
-                <summary>📋 ПОДРОБНЫЙ ОТЧЕТ ▼</summary>
-                <div class="detalle-texto">
-                    <strong>📌 Средний балл по активным измерениям:</strong> ${(((perfilEfectivo === "Docente") ? (d1+d2+d3+d4+d5+d6)/6 : (d1+d2+d3+d4+d5)/5)).toFixed(2)}/5<br>
-                    <strong>🎯 Оцененный профиль:</strong> ${perfilEfectivo === "Docente" ? "Преподаватель" : "Административный сотрудник"}<br>
-                    <strong>⚙️ Методология:</strong> Треугольные функции принадлежности (Базовый, Средний, Продвинутый, Экспертный), правила Мамдани, дефаззификация центром тяжести.<br>
-                    <strong>✅ Валидация:</strong> Согласовано с тестовыми случаями и эталонными значениями рамки DigComp.
-                </div>
-            </details>
-        `;
-        resultsDiv.classList.remove("hidden-results");
-        resultsDiv.classList.add("show-results");
-        resultsDiv.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    function setProfile(profile) {
-        currentProfile = profile;
-        const docCard = document.getElementById("profileDocente");
-        const adminCard = document.getElementById("profileAdmin");
-        if (profile === "Docente") {
-            docCard.classList.add("selected");
-            adminCard.classList.remove("selected");
-        } else {
-            adminCard.classList.add("selected");
-            docCard.classList.remove("selected");
-        }
-        renderSliders();
-        const resDiv = document.getElementById("resultsArea");
-        resDiv.classList.add("hidden-results");
-        resDiv.innerHTML = "";
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        renderSliders();
-        document.getElementById("profileDocente").addEventListener("click", () => setProfile("Docente"));
-        document.getElementById("profileAdmin").addEventListener("click", () => setProfile("Administrativo"));
-        document.getElementById("evaluateBtn").addEventListener("click", evaluar);
-        document.getElementById("resetBtn").addEventListener("click", resetAll);
-    });
-</script>
 </body>
 </html>
